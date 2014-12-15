@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="mappingResources">
+			<list>
+				<value>domain/modeles/metier/Contact.hbm.xml</value>
+				<value>domain/modeles/metier/Address.hbm.xml</value>
+				<value>domain/modeles/metier/PhoneNumber.hbm.xml</value>
+				<value>domain/modeles/metier/ContactGroup.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!-- fait en sorte qu'Hibernate gere automatiquement la session -->
+				<!-- Celle-ci est liée au thread local. -->
+				<prop key="current_session_context_class">thread</prop>
+
+				<!-- defini la taille du pool du JDBC connection -->
+				<prop key="connection.pool_size">1</prop>
+
+				<!-- ici on configure le comportement lors du lancement d'hibernate -->
+				<!-- valeur = update i..e si les tables de la base n'existent pas elles 
+					sont crees, sinon elles sont MAJ, la valeur =create i.e. creation à chaque 
+					lancement -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- Le SQL généré est affiché sur la console -->
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- Pretty format le SQL généré -->
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="defaultTimeout" value="30" />
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+</beans>

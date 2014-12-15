@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23 sept. 2014 16:55:44 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="domain.modeles.metier.PhoneNumber" table="phonenumbers" optimistic-lock="version">
+        <id column="ID_PHONENUMBER" name="id" type="long">
+   			<generator class="increment"/>
+  		</id>
+		
+		<version name="version" access="field" column="version" type="long"/>
+		
+        <property name="phoneKind">
+            <column name="PHONEKIND" />
+        </property>
+        <property name="phoneNumber">
+            <column name="PHONENUMBER" />
+        </property>
+        
+        <many-to-one not-null="true" name="contact" column="ID_CONTACT"/>
+    </class>
+</hibernate-mapping>

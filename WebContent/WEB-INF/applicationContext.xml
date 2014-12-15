@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- Les identifiants d'accès à la base de données -->
+	<import resource="database.xml" />
+	
+	<!-- La configuration Hibernate -->
+	<import resource="hibernate.xml" />
+	
+	<!-- Les classes métier -->
+	<import resource="metier.xml" />
+	
+	<!-- Les classes de la couche service -->
+	<import resource="service.xml" />
+	
+	<!-- Les classes de la couche persistance -->
+	<import resource="persistance.xml" />
+	
+	<!-- La gestion des aspects -->
+	<import resource="aop.xml" />
+</beans>              

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<bean id="Address" class="domain.modeles.metier.Address" scope="prototype" />
+	<bean id="PhoneNumber" class="domain.modeles.metier.PhoneNumber"
+		scope="prototype" />
+	<bean id="ContactGroup" class="domain.modeles.metier.ContactGroup"
+		scope="prototype" />
+
+	<!-- Contact: version constructeur -->
+	<bean id="Contact" class="domain.modeles.metier.Contact" scope="prototype">
+		<constructor-arg>
+			<ref bean="Address" />
+		</constructor-arg>
+		<constructor-arg>
+			<set />
+		</constructor-arg>
+		<constructor-arg>
+			<set />
+		</constructor-arg>
+	</bean>
+
+	<!-- Contact: version setters -->
+	<!-- <bean id="Contact" class="domain.modeles.metier.Contact" scope="prototype"> 
+		<property name="address"> 
+			<ref bean="Address" /> 
+		</property> 
+		<property name="phones"> 
+			<set /> 
+		</property> 
+		<property name="books"> 
+			<set /> 
+		</property> 
+	</bean> -->
+
+	<bean id="Entreprise" parent="Contact" class="domain.modeles.metier.Entreprise"
+		scope="prototype" />
+</beans>

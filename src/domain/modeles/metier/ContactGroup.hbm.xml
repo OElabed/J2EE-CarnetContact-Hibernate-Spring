@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23 sept. 2014 16:55:44 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="domain.modeles.metier.ContactGroup" table="contactgroups" optimistic-lock="version">
+		<id column="ID_GROUP" name="id" type="long">
+			<generator class="increment" />
+		</id>
+		
+		<version name="version" access="field" column="version" type="long"/>
+		
+		<property name="groupName">
+			<column name="GROUP_NAME" />
+		</property>
+
+		<set name="contacts" table="appartenance" lazy="false" inverse="true">
+			<key column="ID_GROUP" />
+			<many-to-many class="domain.modeles.metier.Contact" column="ID_CONTACT"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<bean id="Log" class="util.Log" scope="prototype" />
+
+	<aop:config>
+		<aop:aspect id="LogBean" ref="Log">
+			<aop:before
+				pointcut="execution(* domain.modeles.persistance.*.add*(*)) and args(obj)"
+				method="logSaveStart" arg-names="obj" />
+			<aop:after
+				pointcut="execution(* domain.modeles.persistance.*.add*(*)) and args(obj)"
+				method="logSaveEnd" arg-names="obj" />
+			<aop:before
+				pointcut="execution(* domain.modeles.persistance.*.modify*(*)) and args(obj)"
+				method="logUpdateStart" arg-names="obj" />
+			<aop:after
+				pointcut="execution(* domain.modeles.persistance.*.modify*(*)) and args(obj)"
+				method="logUpdateEnd" arg-names="obj" />
+			<aop:before
+				pointcut="execution(* domain.modeles.persistance.*.delete*(long)) and args(id)"
+				method="logDeleteStart" arg-names="id" />
+			<aop:after
+				pointcut="execution(* domain.modeles.persistance.*.delete*(long)) and args(id)"
+				method="logDeleteEnd" arg-names="id" />
+		</aop:aspect>
+	</aop:config>
+</beans>

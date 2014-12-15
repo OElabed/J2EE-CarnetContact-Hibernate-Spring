@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="domain.modeles.metier">
+	<class name="domain.modeles.metier.Contact" table="contacts" optimistic-lock="version">
+		<id column="ID_CONTACT" name="id" type="long">
+			<generator class="increment" />
+		</id>
+		
+		<version name="version" access="field" column="version" type="long"/>
+
+		<property name="firstName">
+			<column name="FIRSTNAME" />
+		</property>
+
+		<property name="lastName">
+			<column name="LASTNAME" />
+		</property>
+
+		<property name="email">
+			<column name="EMAIL" />
+		</property>
+		
+
+		<!-- cascade: pour rendre toutes les opérations (persist, suppression, 
+			etc) transitives -->
+		<many-to-one not-null="true" unique="true" name="address"
+			column="ADDRESS" cascade="all" lazy="false"/>
+
+		<set name="phones" inverse="true" cascade="all-delete-orphan" lazy="false">
+			<key column="ID_CONTACT" />
+			<one-to-many class="domain.modeles.metier.PhoneNumber" />
+		</set>
+
+		<set name="books" table="appartenance" cascade="save-update" lazy="false" >
+			<key column="ID_CONTACT" />
+			<many-to-many class="domain.modeles.metier.ContactGroup" column="ID_GROUP" />
+		</set>
+		
+		<joined-subclass name="Entreprise" table="entreprises">
+			<key column="ID_CONTACT"/>
+			<property name="numSiret" column="SIRET"/>
+		</joined-subclass>
+
+	</class>
+</hibernate-mapping>
